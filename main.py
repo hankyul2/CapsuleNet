@@ -51,7 +51,7 @@ class MNISTDataModule(LightningDataModule):
         self.mnist_test = MNIST(self.data_dir, train=False, transform=self.test_transform)
 
     def train_dataloader(self):
-        return DataLoader(self.mnist_train, batch_size=self.batch_size, pin_memory=True, persistent_workers=True, num_workers=4)
+        return DataLoader(self.mnist_train, batch_size=self.batch_size, pin_memory=True, num_workers=4)
 
     def val_dataloader(self):
         return DataLoader(self.mnist_val, batch_size=self.batch_size, num_workers=4)
@@ -92,6 +92,6 @@ class BasicVisionSystem(LightningModule):
 
 if __name__ == '__main__':
     data = MNISTDataModule(img_size=(28, 28), batch_size=512)
-    model = BasicVisionSystem(lr=0.001)
-    trainer = Trainer(max_epochs=10, gpus='0,', precision=16, callbacks=RichProgressBar())
+    model = BasicVisionSystem(lr=0.01)
+    trainer = Trainer(max_epochs=10, gpus='7,', precision=16, callbacks=RichProgressBar())
     trainer.fit(model, data)
